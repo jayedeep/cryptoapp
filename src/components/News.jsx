@@ -28,15 +28,15 @@ import { useSelector } from 'react-redux';
 
 
 export default function News({simplified}) {
-  const [newsCategory, setNewsCategory] = useState('Cryptocurrency');
+  const [newsCategory, setNewsCategory] = useState('cryptocurrency');
   var current_currency=useSelector((state)=>state.currency.currency)
 
   const { data } = useGetCryptosQuery({count:100,current_currency});
-  const { data: cryptoNews } = useGetCryptoNewsQuery({ newsCategory, count: simplified ? 6 : 12 ,current_currency});
+  const { data: cryptoNews } = useGetCryptoNewsQuery({ newsCategory});
   const demoImage = 'https://www.bing.com/th?id=OVFT.mpzuVZnv8dwIMRfQGPbOPC&pid=News';
 
-  console.log(">>>>>>>data",newsCategory)
-  if (!cryptoNews?.value) return "Loading...";
+  if (!cryptoNews?.status) return "Loading...";
+  console.log(">>>>>>>data",cryptoNews,"newsCategory",newsCategory)
 
   return (
     <div className='crypto-card-container-news'>
@@ -67,13 +67,12 @@ export default function News({simplified}) {
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
 
-                {cryptoNews.value.map((news, i) => (
-                <Card sx={{ minWidth: 300, maxWidth:300,padding:2,margin:2}} className="card">
+                {cryptoNews.results.map((news, i) => (
+                <Card sx={{ minWidth: 300, maxWidth:300,padding:2,margin:2}} className="card" key={i}>
                     <CardContent >
                         <Typography gutterBottom variant="h7" component="div">
-                        <a href={news.url} target="_blank" rel="noreferrer">
-
-                        {news.name}
+                        <a href={news?.link} target="_blank" rel="noreferrer">
+                        {news?.title}
                         </a>
                         </Typography>
                         
@@ -81,21 +80,21 @@ export default function News({simplified}) {
                       <CardMedia
                         component="img"
                         height="140"
-                        image={news?.image?.thumbnail?.contentUrl || demoImage}
+                        image={news?.image_url || demoImage}
                         alt="green iguana"
                       />
-                        <p>{news.description.length > 100 ? `${news.description.substring(0, 100)}...` : news.description}</p>
+                        <p style={{padding:2}}>{news?.description?.length > 100 ? `${news?.description?.substring(0, 100)}...` : news?.description}</p>
                         <div className="provider-container">
                               <div>
-                                <Avatar src={news.provider[0]?.image?.thumbnail?.contentUrl || demoImage} alt="" />
-                                <Typography gutterBottom component="div" className="provider-name">
-                                {news.provider[0]?.name}
-                                </Typography>
+                                <Avatar src={news?.source_icon || demoImage} alt="" />
                               </div>
-                              <Typography>
-                                {moment(news.datePublished).startOf('ss').fromNow()}
+                              <Typography style={{alignSelf:'center'}}>
+                                {moment(news?.pubDate).startOf('ss').fromNow()}
                                 </Typography>
                             </div>
+                            <Typography gutterBottom component="div" className="provider-name">
+                                {news?.source_url}
+                                </Typography>
                 </Card>
               ))}
           </Grid>

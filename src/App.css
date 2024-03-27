@@ -301,6 +301,8 @@ width: 70%;
 }
 .provider-name{
   margin-left: 10px;
+  text-align: center;
+  padding-top: 3px;
 }
 
 .chart-header{
@@ -362,7 +364,7 @@ width: 70%;
   text-decoration: none;
 }
 .crypto-card-container .card:hover{
-  width: 270px;
+  /* width: 270px; */
   box-shadow: -1px 0px 26px 0px #0071bd;
 -webkit-box-shadow: -1px 0px 26px 0px #0071bd;
 -moz-box-shadow: -1px 0px 26px 0px #0071bd;

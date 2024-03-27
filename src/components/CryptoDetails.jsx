@@ -73,7 +73,7 @@ export default function CryptoDetails() {
           label="Select Timeperiod" 
           onChange={(e) => setTimeperiod(e.target.value)}
           >
-            {time.map((date) => <MenuItem value={date}>{date}</MenuItem>)}
+            {time.map((date,i) => <MenuItem value={date} key={i}>{date}</MenuItem>)}
           </Select>
           </FormControl>
           <LineChart coinHistory={coinHistory} currentPrice={millify(cryptoDetails?.price)} coinName={cryptoDetails?.name} />

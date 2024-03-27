@@ -47,7 +47,7 @@ export default function Cryptocurrencies({simplified}) {
         <Box sx={{ flexGrow: 1 }}>
 
         <Grid container spacing={{ xs: 2, md: 3 }} columnSpacing={{  xs: 1, sm: 2, md: 3 }}>
-        {cryptos ?.map((currency) => (
+        {cryptos ?.map((currency,i) => (
             <Link key={currency.uuid} to={`/crypto/${currency.uuid}`}>
 
             <Card sx={{ minWidth: 250,padding:2,margin:2}} className="card">
